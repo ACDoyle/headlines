@@ -8,24 +8,13 @@ RSS_FEEDS = {'bbc':'http://feeds.bbci.co.uk/news/science_and_environment/rss.xml
              'au':'http://www.dailytelegraph.com.au/news/breaking-news/rss'}
 
 @app.route("/")
-@app.route("/bbc")
-def bbc():
-   return get_news('bbc')
-
-@app.route("/cnn")
-def cnn():
-   return get_news('cnn')
-
-@app.route("/au")
-def gp():
-   return get_news('au')
-
-def get_news(publication):
+@app.route("/<publication>")
+def get_news(publication="bbc"):
    feed = feedparser.parse(RSS_FEEDS[publication])
    first_article = feed['entries'][1]
    return """<html>
       <body>
-         <h1> BBC Headlines </h1>
+         <h1> Headlines </h1>
          <b>{0}</b> <br/>
          <i>{1}</i> <br/>
          <p>{2}</p> <br/>
