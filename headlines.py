@@ -38,7 +38,8 @@ def get_weather(query):
    parsed = json.loads(data)
    weather = None
    if parsed.get("weather"):
-      weather = {"description":parsed["weather"][0]["description"],"temperature":parsed["main"]["temp"],"city":parsed["name"]}
+      weather = {"description":parsed["weather"][0]["description"],"temperature":parsed["main"]["temp"],"city":parsed["name"],"lat":parsed["coord"]["lat"],"lon":parsed["coord"]["lon"],"humidity":parsed["main"]["humidity"],"pressure":parsed["main"]["pressure"],"temp_min":parsed["main"]["temp_min"],"temp_max":parsed["main"]["temp_max"],"wind":parsed["wind"]["speed"]}
+
    return weather
 
 def get_news(query):
