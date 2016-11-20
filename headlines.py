@@ -1,6 +1,7 @@
 import feedparser
 from flask import render_template #Jinja temlate use, converts to html
 from flask import Flask
+from flask import request
 
 app = Flask(__name__)
 
@@ -9,10 +10,13 @@ RSS_FEEDS = {'bbc':'http://feeds.bbci.co.uk/news/science_and_environment/rss.xml
              'au':'http://www.dailytelegraph.com.au/news/breaking-news/rss'}
 
 @app.route("/")
-@app.route("/<publication>")
-def get_news(publication="bbc"):
+def get_news():
+   query = request.args.get("publication")
+   if not query or query.lower() not in RSS_FEEDS:
+      publication = "bbc"
+   else:
+      publication = query.lower()
    feed = feedparser.parse(RSS_FEEDS[publication])
-#   first_article = feed['entries'][0]
    return render_template("home.html", articles=feed['entries'])
 
 if __name__ == '__main__':
